@@ -20,7 +20,6 @@ public class Bill_v2_mongo implements RowProcess {
     private int counter = 0;
     private static int BATCH_COMMIT_SIZE = 10_0000;
     private long beginStatTime;
-    private boolean isLastRow = false;
     private List<Document> cacheList = new ArrayList<>(BATCH_COMMIT_SIZE);
 
     public Bill_v2_mongo() {
@@ -109,24 +108,28 @@ public class Bill_v2_mongo implements RowProcess {
 
         cacheList.add(newDocument);
 
-        if (++counter % BATCH_COMMIT_SIZE == 0 || isLastRow) {
-            mongoCollection.insertMany(cacheList);
-            cacheList.clear();
-
-            long endTime = System.currentTimeMillis();
-            long duration = endTime - beginStatTime;
-            duration = (duration == 0) ? 1 : duration;
-            double speed = (BATCH_COMMIT_SIZE * 1.0) / duration * 1000;
-
-            System.out.println(new DateTime().toString("HH:mm:ss") + ", 已抽取" + counter + "条数据." + "当前抽取速度: " +
-                    String.format("%.2f", speed) + "条/秒 ");
-
-            beginStatTime = System.currentTimeMillis();
+        if (++counter % BATCH_COMMIT_SIZE == 0) {
+            insertBatch();
         }
     }
 
+    private void insertBatch() {
+        mongoCollection.insertMany(cacheList);
+        cacheList.clear();
+
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - beginStatTime;
+        duration = (duration == 0) ? 1 : duration;
+        double speed = (BATCH_COMMIT_SIZE * 1.0) / duration * 1000;
+
+        System.out.println(new DateTime().toString("HH:mm:ss") + ", 已抽取" + counter + "条数据." + "当前抽取速度: " +
+                String.format("%.2f", speed) + "条/秒 ");
+
+        beginStatTime = System.currentTimeMillis();
+    }
+
     @Override
-    public void setLastRow() {
-        isLastRow = true;
+    public void streamArrivalTerminal() {
+        insertBatch();
     }
 }
