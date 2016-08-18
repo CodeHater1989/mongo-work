@@ -1,3 +1,5 @@
+package mongoSmallTest;
+
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;

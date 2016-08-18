@@ -1,3 +1,5 @@
+package mongoSmallTest;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
@@ -8,7 +10,6 @@ import org.bson.Document;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by wanglei on 16/7/25.

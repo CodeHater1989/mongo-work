@@ -1,3 +1,5 @@
+package oracle2Mongo;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +23,7 @@ import java.util.Map;
 public class OracleStream {
     private String          url;
     private String          sql;
-    private RowProcess      process;
+    private RowProcess process;
     private ProcessCallback callback;
 
     public void processDataStream() {

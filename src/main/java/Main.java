@@ -1,12 +1,4 @@
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
-import testCode.Test15;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.text.DecimalFormat;
-import java.util.List;
+import oracle2Mongo.Oracle2MongoWithAggregate;
 
 /**
  * Created by wanglei on 16/7/25.

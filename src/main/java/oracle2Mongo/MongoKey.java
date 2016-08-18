@@ -1,3 +1,5 @@
+package oracle2Mongo;
+
 import com.google.common.base.Objects;
 
 /**

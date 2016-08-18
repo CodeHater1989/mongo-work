@@ -1,3 +1,5 @@
+package querySpeedTest;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.mongodb.BasicDBObject;

@@ -1,3 +1,5 @@
+package oracle2Mongo;
+
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.io.Files;

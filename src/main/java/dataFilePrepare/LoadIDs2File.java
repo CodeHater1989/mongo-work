@@ -1,3 +1,5 @@
+package dataFilePrepare;
+
 import com.google.common.base.Charsets;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;

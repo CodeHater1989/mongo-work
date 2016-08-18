@@ -1,3 +1,5 @@
+package oracleSmallTest;
+
 import oracle.jdbc.pool.OracleDataSource;
 
 import java.sql.Connection;
