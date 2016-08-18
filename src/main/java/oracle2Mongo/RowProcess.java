@@ -8,5 +8,5 @@ import java.util.Map;
 public interface RowProcess {
     void processOneRow(Map<String, Object> rowMap);
 
-    void setLastRow();
+    void streamArrivalTerminal();
 }

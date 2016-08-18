@@ -29,7 +29,6 @@ public class AggregateInsertMongo implements RowProcess {
     private static int                               BATCH_SIZE      = 1_0000;
     private        Multimap<MongoKey, BasicDBObject> mingxiMap       = HashMultimap.create();
 //    private        Map<MongoKey, Integer>            mingxiCounter   = new HashMap<>();
-    private        boolean                           isLastRow       = false;
 
     public AggregateInsertMongo() {
 //        MongoClient   mongoClient = new MongoClient("10.117.130.122", 27000);
@@ -101,7 +100,7 @@ public class AggregateInsertMongo implements RowProcess {
         mingxiMap.put(new MongoKey(rowMap.get("PID"), rowMap.get("ETL_Patient_IDStr")), appendObject);
 
         counter++;
-        if (counter % BATCH_SIZE == 0 || isLastRow) {
+        if (counter % BATCH_SIZE == 0) {
             long second = (new Date().getTime() - beginDate.getTime()) / 1000l;
             second = (second == 0) ? 1 : second;
 
@@ -141,7 +140,7 @@ public class AggregateInsertMongo implements RowProcess {
     }
 
     @Override
-    public void setLastRow() {
-        isLastRow = true;
+    public void streamArrivalTerminal() {
+
     }
 }

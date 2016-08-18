@@ -21,9 +21,9 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OracleStream {
-    private String url;
-    private String sql;
-    private RowProcess process;
+    private String          url;
+    private String          sql;
+    private RowProcess      process;
     private ProcessCallback callback;
 
     public void processDataStream() {
@@ -37,8 +37,8 @@ public class OracleStream {
             dataSource.setURL(url);
 
             connection = dataSource.getConnection();
-            ps = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-//            ps         = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+//            ps = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps         = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ps.setFetchSize(FETCH_SIZE);
 
             rs = ps.executeQuery(sql);
@@ -57,13 +57,10 @@ public class OracleStream {
                     row.put(columnLabels.get(j), rs.getObject(columnLabels.get(j)));
                 }
 
-                if (rs.isLast()) {
-                    process.setLastRow();
-                }
-
                 process.processOneRow(row);
                 callback.callAfterProcess();
             }
+            process.streamArrivalTerminal();
 
         } catch (SQLException e) {
             e.printStackTrace();
