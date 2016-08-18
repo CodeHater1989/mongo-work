@@ -14,9 +14,7 @@ public class InteruptJDBCOperation {
         PreparedStatement[] ps = new PreparedStatement[1];
         Thread t = new Thread(() -> {
             try {
-//                String sql = "create table x(x VARCHAR2(200))";
-//                String sql = "SELECT * from x, x, x, x";
-                String sql = "INSERT INTO x SELECT * from x";
+                String sql = "SELECT * from JOBS";
                 OracleDataSource dataSource = new OracleDataSource();
                 dataSource.setURL("jdbc:oracle:thin:system/orcl@10.117.197.48:1521:orcl");
                 Connection connection = dataSource.getConnection();

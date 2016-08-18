@@ -49,16 +49,44 @@ public class OracleStream {
                 columnLabels.add(mdrs.getColumnLabel(i));
             }
 
-            while (rs.next()) {
-                Map row = new HashMap();
-                for (int j = 0; j < columnLabels.size(); j++) {
-                    row.put(columnLabels.get(j), rs.getObject(columnLabels.get(j)));
+
+            while (true) {
+                Map row0 = new HashMap();
+                Map row1 = new HashMap();
+                if(rs.next()) {
+                    for (int j = 0; j < columnLabels.size(); j++) {
+                        row0.put(columnLabels.get(j), rs.getObject(columnLabels.get(j)));
+                    }
                 }
 
-                process.setLastRow();
-                process.processOneRow(row);
-                callback.callAfterProcess();
+                if (rs.next()) {
+                    for (int j = 0; j < columnLabels.size(); j++) {
+                        row1.put(columnLabels.get(j), rs.getObject(columnLabels.get(j)));
+                    }
+                }
+
+                if (row0.isEmpty() && row1.isEmpty()) break;
+
+                if (!row0.isEmpty() && row1.isEmpty()) {
+                    process.processOneRow(row0);
+                    callback.callAfterProcess();
+
+                    process.setLastRow();
+
+                    process.processOneRow(row1);
+                    callback.callAfterProcess();
+                }
+
+                if (row0.isEmpty() && !row1.isEmpty()) {
+                    process.processOneRow(row0);
+                    callback.callAfterProcess();
+
+                    process.processOneRow(row1);
+                    callback.callAfterProcess();
+                }
+
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

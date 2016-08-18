@@ -16,12 +16,12 @@ import java.util.Map;
  * Created by wanglei on 16/8/18.
  */
 public class Bill_v2_mongo implements RowProcess {
-    private        MongoCollection mongoCollection;
-    private        int             counter           =       0;
-    private static int             BATCH_COMMIT_SIZE = 10_0000;
-    private        long            beginStatTime;
-    private        boolean         isLastRow         = false;
-    private        List<Document>  cacheList         = new ArrayList<>(BATCH_COMMIT_SIZE);
+    private MongoCollection mongoCollection;
+    private int counter = 0;
+    private static int BATCH_COMMIT_SIZE = 10_0000;
+    private long beginStatTime;
+    private boolean isLastRow = false;
+    private List<Document> cacheList = new ArrayList<>(BATCH_COMMIT_SIZE);
 
     public Bill_v2_mongo() {
         MongoClient mongoClient = new MongoClient();
@@ -114,10 +114,11 @@ public class Bill_v2_mongo implements RowProcess {
             cacheList.clear();
 
             long endTime = System.currentTimeMillis();
-            double speed = BATCH_COMMIT_SIZE / ((endTime - beginStatTime) / 1000.0);
+            long duration = endTime - beginStatTime;
+            duration = (duration == 0) ? 1 : duration;
+            double speed = (BATCH_COMMIT_SIZE * 1.0) / duration * 1000;
 
-            System.out.println(new DateTime().toString("HH:mm:ss") + ", 已抽取" +
-                    (counter / BATCH_COMMIT_SIZE) * 10 + "万条数据." + "当前抽取速度: " +
+            System.out.println(new DateTime().toString("HH:mm:ss") + ", 已抽取" + counter + "条数据." + "当前抽取速度: " +
                     String.format("%.2f", speed) + "条/秒 ");
 
             beginStatTime = System.currentTimeMillis();
