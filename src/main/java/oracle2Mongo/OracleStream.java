@@ -23,7 +23,7 @@ import java.util.Map;
 public class OracleStream {
     private String          url;
     private String          sql;
-    private RowProcess process;
+    private RowProcess      process;
     private ProcessCallback callback;
 
     public void processDataStream() {
@@ -45,7 +45,7 @@ public class OracleStream {
             ResultSetMetaData mdrs         = rs.getMetaData();
             List<String>      columnLabels = new ArrayList<>();
 
-            for (int i = 0; i < mdrs.getColumnCount(); i++) {
+            for (int i = 1; i <= mdrs.getColumnCount(); i++) {
                 columnLabels.add(mdrs.getColumnLabel(i));
             }
 
@@ -55,6 +55,7 @@ public class OracleStream {
                     row.put(columnLabels.get(j), rs.getObject(columnLabels.get(j)));
                 }
 
+                process.setLastRow();
                 process.processOneRow(row);
                 callback.callAfterProcess();
             }
