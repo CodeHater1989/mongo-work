@@ -1,20 +1,23 @@
 package oracle2Mongo;
 
 import com.google.common.base.Charsets;
+import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by wanglei on 16/7/25.
  */
 public class Oracle2MongoWithAggregate {
     public static void beginTransfer() throws IOException, URISyntaxException {
+        String sql = new String(
+                ByteStreams.toByteArray(bill_v2_main.class.getResourceAsStream("/detail_coll.sql")),
+                StandardCharsets.UTF_8);
 
-        File sqlFile = new File(Oracle2MongoWithAggregate.class.getResource("/detail_coll.sql").toURI());
-        String sql = Files.toString(sqlFile, Charsets.UTF_8);
         String url = "jdbc:oracle:thin:bmi_nanj/25thibd5@10.117.130.17:1521:ehong";
 
         OracleStream stream = new OracleStream(url, sql, new AggregateInsertMongo(), () -> {});
