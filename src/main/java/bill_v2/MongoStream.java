@@ -1,5 +1,6 @@
 package bill_v2;
 
+import Utils.DocumentHandler;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -9,7 +10,6 @@ import oracle2Mongo.ProcessCallback;
 import oracle2Mongo.RowProcess;
 import org.bson.Document;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @AllArgsConstructor
 @Data
-public class Billv2MongoStream {
+public class MongoStream {
     private RowProcess process;
     private ProcessCallback callback;
 
@@ -27,15 +27,12 @@ public class Billv2MongoStream {
 //        MongoClient   mongoClient = new MongoClient();
         MongoDatabase db = mongoClient.getDatabase("wl_insert");
 
-        MongoCollection mongoCollection = db.getCollection("bill");
+        MongoCollection mongoCollection = db.getCollection("bill_detail");
 
         Iterator<Document> iterator= mongoCollection.find().iterator();
         while (iterator.hasNext()) {
             Document document = iterator.next();
-            Map<String, Object> row = new HashMap<>();
-            for (Map.Entry<String, Object> entry : document.entrySet()) {
-                row.put(entry.getKey().toUpperCase(), entry.getValue());
-            }
+            Map<String, Object> row = DocumentHandler.flatDocument(document);
 
             process.processOneRow(row);
         }

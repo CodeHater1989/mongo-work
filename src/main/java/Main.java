@@ -17,5 +17,7 @@ public class Main {
 //        Test15.main(null);
 //        Bill_v2_main.beginProcess();
         Bill_detail_v2_main.beginProcess();
+//        System.out.println(Number.class.isAssignableFrom(Integer.class));
+//        System.out.println(Integer.class.isAssignableFrom(Number.class));
     }
 }

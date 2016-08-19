@@ -7,7 +7,7 @@ import java.io.IOException;
  */
 public class Bill_v2_main {
     public static void beginProcess() throws IOException {
-        Billv2MongoStream stream = new Billv2MongoStream(new Bill_v2_mongo_process(), () -> {});
+        MongoStream stream = new MongoStream(new Bill_v2_mongo_process(), () -> {});
 
         new Thread(() -> {stream.processDataStream();}).start();
     }

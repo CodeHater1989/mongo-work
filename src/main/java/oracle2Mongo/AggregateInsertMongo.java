@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -97,7 +96,7 @@ public class AggregateInsertMongo implements RowProcess {
                 .append("COSTS_REAL_MONEY", rowMap.get("COSTS_REAL_MONEY"))
                 .append("ITEM_DATE", rowMap.get("ITEM_DATE"));
 
-        mingxiMap.put(new MongoKey(rowMap.get("PID"), rowMap.get("ETL_Patient_IDStr")), appendObject);
+        mingxiMap.put(new MongoKey((String) rowMap.get("PID"), (String) rowMap.get("ETL_Patient_IDStr")), appendObject);
 
         counter++;
         if (counter % BATCH_SIZE == 0) {

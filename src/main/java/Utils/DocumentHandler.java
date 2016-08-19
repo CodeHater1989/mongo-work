@@ -16,8 +16,12 @@ public class DocumentHandler {
             String key = entry.getKey();
             Object value = entry.getValue();
 
-//            if (null != key) System.out.println(key);
-            if (null != value) System.out.println(value.getClass().getName());
+            if (null != value && Document.class.isAssignableFrom(value.getClass())) {
+                Map<String, Object> subDocument = flatDocument((Document) value);
+                flatMap.putAll(subDocument);
+            } else {
+                flatMap.put(key.toUpperCase(), value);
+            }
         }
 
         return flatMap;

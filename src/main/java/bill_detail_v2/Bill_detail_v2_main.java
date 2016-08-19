@@ -1,7 +1,6 @@
 package bill_detail_v2;
 
-import bill_v2.Bill_v2_mongo_process;
-import bill_v2.Billv2MongoStream;
+import bill_v2.MongoStream;
 
 import java.io.IOException;
 
@@ -10,7 +9,7 @@ import java.io.IOException;
  */
 public class Bill_detail_v2_main {
     public static void beginProcess() throws IOException {
-        BillDetailv2MongoStream stream = new BillDetailv2MongoStream(new BillDetailv2MongoProcess(), () -> {});
+        MongoStream stream = new MongoStream(new BillDetailv2MongoProcess(), () -> {});
 
         new Thread(() -> {stream.processDataStream();}).start();
     }
