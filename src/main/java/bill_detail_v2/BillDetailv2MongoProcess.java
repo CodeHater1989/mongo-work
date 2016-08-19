@@ -37,8 +37,8 @@ public class BillDetailv2MongoProcess implements RowProcess {
     private              File                         logFile;
 
     public BillDetailv2MongoProcess() {
-//        MongoClient   mongoClient = new MongoClient("10.117.130.122", 27000);
-        MongoClient   mongoClient = new MongoClient();
+        MongoClient   mongoClient = new MongoClient("10.117.130.122", 27000);
+//        MongoClient   mongoClient = new MongoClient();
         MongoDatabase db          = mongoClient.getDatabase("wl_insert");
 
         mongoCollection = db.getCollection("gz_detail_v2");
