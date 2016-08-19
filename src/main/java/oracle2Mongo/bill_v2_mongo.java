@@ -23,8 +23,8 @@ public class Bill_v2_mongo implements RowProcess {
     private List<Document> cacheList = new ArrayList<>(BATCH_COMMIT_SIZE);
 
     public Bill_v2_mongo() {
-        MongoClient mongoClient = new MongoClient();
-//        MongoClient   mongoClient = new MongoClient("10.117.130.122", 27000);
+//        MongoClient mongoClient = new MongoClient();
+        MongoClient   mongoClient = new MongoClient("10.117.130.122", 27000);
         MongoDatabase db = mongoClient.getDatabase("wl_insert");
 
         mongoCollection = db.getCollection("gz_bill_v2");

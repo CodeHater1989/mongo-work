@@ -32,7 +32,7 @@ public class MongoStream {
             Document document = iterator.next();
             Map<String, Object> row = new HashMap<>();
             for (Map.Entry<String, Object> entry : document.entrySet()) {
-                row.put(entry.getKey(), entry.getValue());
+                row.put(entry.getKey().toUpperCase(), entry.getValue());
             }
 
             process.processOneRow(row);
