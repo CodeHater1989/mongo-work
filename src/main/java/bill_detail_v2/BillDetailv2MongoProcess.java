@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class BillDetailv2MongoProcess implements RowProcess {
 
-    private static final int                          BATCH_SIZE             = 1_0000;
+    private static final int                          BATCH_SIZE             = 10_0000;
     private              MongoCollection              mongoCollection;
     private              Map<MongoKey, Integer>       keyStat                = new HashMap<>();
     private static final int                          MAX_RECODE_DETAIL_SIZE = 2_0000;
@@ -37,7 +37,8 @@ public class BillDetailv2MongoProcess implements RowProcess {
     private              File                         logFile;
 
     public BillDetailv2MongoProcess() {
-        MongoClient   mongoClient = new MongoClient("10.117.130.122", 27000);
+//        MongoClient   mongoClient = new MongoClient("10.117.130.122", 27000);
+        MongoClient   mongoClient = new MongoClient();
         MongoDatabase db          = mongoClient.getDatabase("wl_insert");
 
         mongoCollection = db.getCollection("gz_detail_v2");
@@ -134,45 +135,47 @@ public class BillDetailv2MongoProcess implements RowProcess {
 
         mingxiMap.put(mongoKey, appendObject);
         keyStat.put(mongoKey, keyStat.get(mongoKey) + 1);
+
+        if (++recordCounter % BATCH_SIZE == 0) {
+            insertBatch();
+        }
     }
 
     private void insertBatch() {
-        if (++recordCounter % BATCH_SIZE == 0) {
-            long second = (new Date().getTime() - beginDate.getTime()) / 1000l;
-            second = (second == 0) ? 1 : second;
+        long second = (new Date().getTime() - beginDate.getTime()) / 1000l;
+        second = (second == 0) ? 1 : second;
 
-            String timeformatString = new DateTime().toString("HH:mm:ss");
+        String timeformatString = new DateTime().toString("HH:mm:ss");
 
-            System.out.println("此次" + BATCH_SIZE + "条oracle原始纪录，共聚合成" + mingxiMap.asMap().size() + "条纪录。");
-            for (Map.Entry<MongoKey, Collection<Document>> mongoEntry : mingxiMap.asMap().entrySet()) {
-                MongoKey key = mongoEntry.getKey();
-                Collection<Document> value = mongoEntry.getValue();
+        System.out.println("此次" + BATCH_SIZE + "条oracle原始纪录，共聚合成" + mingxiMap.asMap().size() + "条纪录。");
+        for (Map.Entry<MongoKey, Collection<Document>> mongoEntry : mingxiMap.asMap().entrySet()) {
+            MongoKey key = mongoEntry.getKey();
+            Collection<Document> value = mongoEntry.getValue();
 
-                Object pid = key.getPID();
-                Object id = key.getETL_Patient_IDStr();
+            Object pid = key.getPID();
+            Object id = key.getETL_Patient_IDStr();
 
-                BasicDBList mingxiList = new BasicDBList();
-                mingxiList.addAll(value);
+            BasicDBList mingxiList = new BasicDBList();
+            mingxiList.addAll(value);
 
-                Document searchQuery = new Document().append("ETL_Patient_IDStr", id).append("PID", pid);
-                Document newDocument = new Document().append("$push", new Document().append("mingxi", new Document().append("$each", mingxiList)));
+            Document searchQuery = new Document().append("ETL_Patient_IDStr", id).append("PID", pid);
+            Document newDocument = new Document().append("$push", new Document().append("mingxi", new Document().append("$each", mingxiList)));
 
+            try {
+                mongoCollection.updateOne(searchQuery, newDocument);
+            } catch (Exception e) {
                 try {
-                    mongoCollection.updateOne(searchQuery, newDocument);
-                } catch (Exception e) {
-                    try {
-                        Files.append("时间 " + timeformatString + ", 处理条目PID:" + pid + "" + ", ETL_Patient_IDStr: " + id + ". 错误信息: " + e.getMessage() + "\n", logFile, Charsets.UTF_8);
-                    } catch (IOException e1) {
-                        System.out.println(Throwables.getStackTraceAsString(e1));
-                    }
-                    e.printStackTrace();
+                    Files.append("时间 " + timeformatString + ", 处理条目PID:" + pid + "" + ", ETL_Patient_IDStr: " + id + ". 错误信息: " + e.getMessage() + "\n", logFile, Charsets.UTF_8);
+                } catch (IOException e1) {
+                    System.out.println(Throwables.getStackTraceAsString(e1));
                 }
+                e.printStackTrace();
             }
-
-            System.out.println("时间 " + timeformatString + ", 已处理" + recordCounter / 10000.0 + "万条数据, 处理速度" + recordCounter / second + "条/秒.");
-
-            mingxiMap.clear();
         }
+
+        System.out.println("时间 " + timeformatString + ", 已处理" + recordCounter / 10000.0 + "万条数据, 处理速度" + recordCounter / second + "条/秒.");
+
+        mingxiMap.clear();
     }
 
     @Override

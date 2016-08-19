@@ -21,6 +21,8 @@ import java.util.Map;
 public class MongoStream {
     private RowProcess process;
     private ProcessCallback callback;
+    private Document queryCondition = new Document();
+    private Document sortCondition = new Document();
 
     public void processDataStream() {
         MongoClient   mongoClient = new MongoClient("10.117.130.122", 27000);
@@ -29,7 +31,7 @@ public class MongoStream {
 
         MongoCollection mongoCollection = db.getCollection("bill_detail");
 
-        Iterator<Document> iterator= mongoCollection.find().iterator();
+        Iterator<Document> iterator= mongoCollection.find(queryCondition).sort(sortCondition).iterator();
         while (iterator.hasNext()) {
             Document document = iterator.next();
             Map<String, Object> row = DocumentHandler.flatDocument(document);

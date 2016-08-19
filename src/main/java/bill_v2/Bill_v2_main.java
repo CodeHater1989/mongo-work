@@ -1,5 +1,7 @@
 package bill_v2;
 
+import org.bson.Document;
+
 import java.io.IOException;
 
 /**
@@ -7,7 +9,7 @@ import java.io.IOException;
  */
 public class Bill_v2_main {
     public static void beginProcess() throws IOException {
-        MongoStream stream = new MongoStream(new Bill_v2_mongo_process(), () -> {});
+        MongoStream stream = new MongoStream(new Bill_v2_mongo_process(), () -> {}, new Document(), new Document());
 
         new Thread(() -> {stream.processDataStream();}).start();
     }
