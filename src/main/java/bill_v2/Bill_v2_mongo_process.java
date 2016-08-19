@@ -1,6 +1,7 @@
 package bill_v2;
 
 import Utils.TypeHandler;
+import com.google.common.io.Files;
 import com.mongodb.BasicDBList;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -9,6 +10,9 @@ import oracle2Mongo.RowProcess;
 import org.bson.Document;
 import org.joda.time.DateTime;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +21,12 @@ import java.util.Map;
  * Created by wanglei on 16/8/18.
  */
 public class Bill_v2_mongo_process implements RowProcess {
-    private MongoCollection mongoCollection;
-    private int counter = 0;
-    private static int BATCH_COMMIT_SIZE = 10_0000;
-    private long beginStatTime;
-    private List<Document> cacheList = new ArrayList<>(BATCH_COMMIT_SIZE);
+    private        MongoCollection mongoCollection;
+    private        int             counter           =       0;
+    private static int             BATCH_COMMIT_SIZE = 10_0000;
+    private        long            beginStatTime;
+    private        List<Document>  cacheList         = new ArrayList<>(BATCH_COMMIT_SIZE);
+    private        File            logFile;
 
     public Bill_v2_mongo_process() {
 //        MongoClient mongoClient = new MongoClient();
@@ -31,6 +36,12 @@ public class Bill_v2_mongo_process implements RowProcess {
         mongoCollection = db.getCollection("gz_bill_v2");
 
         beginStatTime = System.currentTimeMillis();
+
+        logFile = new File("bill_v2_log.txt");
+
+        if (logFile.exists()) {
+            logFile.delete();
+        }
     }
 
     @Override
@@ -124,10 +135,18 @@ public class Bill_v2_mongo_process implements RowProcess {
         duration = (duration == 0) ? 1 : duration;
         double speed = (BATCH_COMMIT_SIZE * 1.0) / duration * 1000;
 
-        System.out.println(new DateTime().toString("HH:mm:ss") + ", 已抽取" + counter + "条数据." + "当前抽取速度: " +
-                String.format("%.2f", speed) + "条/秒 ");
+        String log = new DateTime().toString("HH:mm:ss") + ", 已抽取" + counter + "条数据." + "当前抽取速度: " +
+                String.format("%.2f", speed) + "条/秒 ";
+
+        System.out.println(log);
 
         beginStatTime = System.currentTimeMillis();
+
+        try {
+            Files.append(log, logFile, Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

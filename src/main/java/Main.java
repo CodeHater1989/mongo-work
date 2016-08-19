@@ -1,3 +1,4 @@
+import bill_detail_v2.Bill_detail_v2_main;
 import bill_v2.Bill_v2_main;
 
 /**
@@ -14,6 +15,7 @@ public class Main {
 //        System.out.println(new DecimalFormat("##.##").format(33.23423));
 //        System.out.println(String.format("%5s", "abwewrwesdfs"));
 //        Test15.main(null);
-        Bill_v2_main.beginProcess();
+//        Bill_v2_main.beginProcess();
+        Bill_detail_v2_main.beginProcess();
     }
 }

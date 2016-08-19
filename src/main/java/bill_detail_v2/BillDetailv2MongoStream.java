@@ -1,5 +1,6 @@
 package bill_detail_v2;
 
+import Utils.DocumentHandler;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -27,14 +28,16 @@ public class BillDetailv2MongoStream {
 //        MongoClient   mongoClient = new MongoClient();
         MongoDatabase db = mongoClient.getDatabase("wl_insert");
 
-        MongoCollection mongoCollection = db.getCollection("bill");
+        MongoCollection mongoCollection = db.getCollection("bill_detail");
 
         Iterator<Document> iterator= mongoCollection.find().iterator();
         while (iterator.hasNext()) {
+            Document document = iterator.next();
+            DocumentHandler.flatDocument(document);
 
 //            process.processOneRow(row);
         }
 
-        process.streamArrivalTerminal();
+//        process.streamArrivalTerminal();
     }
 }
