@@ -28,7 +28,7 @@ select
     m.ITEM_DATE                ITEM_TICKS_TIME_Next, -- long
     1                          theFirstClinicalType,
     21                         theSecondType,
-  --'RD_DiseaseCode'           RD_DiseaseCode,
+    --'RD_DiseaseCode'           RD_DiseaseCode,
     '330799-8002'              RD_HospitalID,
     '1'                        RD_HospitalType,
     -1                         RD_FIRST_DATE,   -- long
@@ -37,7 +37,7 @@ select
     m.PHYSICIAN_NAME           PHYSICIAN_NAME,
     m.REAL_NUM                 REAL_NUM,
     m.REAL_MONEY               REAL_MONEY,
-    m.PHYSICIAN_ID             ETL_Patient_IDStr,
+    n.PATIENT_ID               ETL_Patient_IDStr,
     1                          ALLOW_HISTORY,
     ''                         ApprovalNumber,
     '330799-98670086'          ETL_ClaimID,
@@ -49,4 +49,5 @@ select
     '3700808191'               PrescriptionNo,
     0.0d                       COSTS_REAL_MONEY,
     m.ITEM_DATE                ITEM_DATE
-from dw_billdetail m
+from dw_billdetail m, dw_bill n
+WHERE m.PID = n.HISID

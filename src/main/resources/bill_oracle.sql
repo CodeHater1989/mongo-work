@@ -1,6 +1,6 @@
 select
   'ETL_LOAD_DATE'                                 ETL_LOAD_DATE,
-  m.HISID                                         ID,
+  m.ID                                            ID,
   m.HISID                                         HISID,
   m.Patient_ID                                    Patient_IDStr,
   m.UNUSUAL_FLAG                                  UNUSUAL_FLAG,
