@@ -2,7 +2,7 @@ package bill_detail_v2;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
-import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.io.Files;
 import com.mongodb.BasicDBList;
@@ -31,7 +31,7 @@ public class BillDetailv2MongoProcess implements RowProcess {
     private              Map<MongoKey, Integer>       keyStat                = new HashMap<>();
     private static final int                          MAX_RECODE_DETAIL_SIZE = 2_0000;
     private static       String                       SEPARATOR              = "###";
-    private              Multimap<MongoKey, Document> mingxiMap              = HashMultimap.create();
+    private              Multimap<MongoKey, Document> mingxiMap              = ArrayListMultimap.create();
     private              int                          recordCounter          =      0;
     private              Date                         beginDate;
     private              File                         logFile;
