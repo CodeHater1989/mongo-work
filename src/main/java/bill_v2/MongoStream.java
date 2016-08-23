@@ -29,7 +29,7 @@ public class MongoStream {
 //        MongoClient   mongoClient = new MongoClient();
         MongoDatabase db = mongoClient.getDatabase("wl_insert");
 
-        MongoCollection mongoCollection = db.getCollection("bill_detail");
+        MongoCollection mongoCollection = db.getCollection("bill_detail_v3");
 
         Iterator<Document> iterator= mongoCollection.find(queryCondition).sort(sortCondition).iterator();
         while (iterator.hasNext()) {

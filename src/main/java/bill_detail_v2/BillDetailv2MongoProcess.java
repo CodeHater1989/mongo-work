@@ -44,7 +44,7 @@ public class BillDetailv2MongoProcess implements RowProcess {
         mongoCollection = db.getCollection("gz_detail_v2");
 
         beginDate       = new Date();
-        logFile         = new File("detail_log.txt");
+        logFile         = new File("gz_bill_detail_v2.txt");
 
         if (logFile.exists()) {
             logFile.delete();
