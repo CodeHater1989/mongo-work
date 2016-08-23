@@ -1,6 +1,6 @@
 package BillDetail;
 
-import Bill.SimpleMongoProcess1;
+import Bill.SimpleMongoProcess2;
 import com.google.common.io.ByteStreams;
 import oracle2Mongo.OracleStream;
 
@@ -18,7 +18,7 @@ public class BillDetailMain {
 
         String url = "jdbc:oracle:thin:bmi_nanj/25thibd5@10.117.130.17:1521:ehong";
 
-        OracleStream stream = new OracleStream(url, sql, new SimpleMongoProcess1("bill_detail", "bill_detail.txt"), () -> {});
+        OracleStream stream = new OracleStream(url, sql, new SimpleMongoProcess2("bill_detail", "bill_detail.txt"), () -> {});
 
         new Thread(() -> {stream.processDataStream();}).start();
     }
