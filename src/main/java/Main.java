@@ -1,3 +1,5 @@
+import Bill.BillMain;
+import BillDetail.BillDetailMain;
 import bill_detail_v2.Bill_detail_v2_main;
 import bill_v2.Bill_v2_main;
 
@@ -16,8 +18,10 @@ public class Main {
 //        System.out.println(String.format("%5s", "abwewrwesdfs"));
 //        Test15.main(null);
 //        Bill_v2_main.beginProcess();
-        Bill_detail_v2_main.beginProcess();
+//        Bill_detail_v2_main.beginProcess();
 //        System.out.println(Number.class.isAssignableFrom(Integer.class));
 //        System.out.println(Integer.class.isAssignableFrom(Number.class));
+//        BillMain.processData();
+        BillDetailMain.processData();
     }
 }

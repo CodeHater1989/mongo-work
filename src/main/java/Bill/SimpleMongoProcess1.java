@@ -55,6 +55,7 @@ public class SimpleMongoProcess1 implements RowProcess {
             String logString = new DateTime().toString(Constants.TIME_SHOW_FORMAT) + ", 已插入" + counter + "条数据, 抽取速度: " + speed + "条/秒";
             System.out.println(logString);
             Files.append(logString, logFile, StandardCharsets.UTF_8);
+            beginTime = System.currentTimeMillis();
         } catch (IOException e) {
             e.printStackTrace();
         }
