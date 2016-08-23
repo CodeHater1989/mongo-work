@@ -3,6 +3,7 @@ package Bill;
 import Utils.Constants;
 import Utils.TypeHandler;
 import com.google.common.io.Files;
+import com.mongodb.BasicDBList;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -61,6 +62,40 @@ public class SimpleMongoProcess1 implements RowProcess {
 
     @Override
     public void processOneRow(Map<String, Object> rowMap) {
+        BasicDBList diseases = new BasicDBList();
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_ONE")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DISEASE_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_SECOND")));
+        diseases.add(TypeHandler.convertType(rowMap.get("SECOND_DISEASE_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_THIRD")));
+        diseases.add(TypeHandler.convertType(rowMap.get("THIRD_DISEASE_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_FOUR")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_FOUR_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_FIVE")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_FIVE_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_SIX")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_SIX_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_SEVEN")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_SEVEN_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_EIGHT")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_EIGHT_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_NINE")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_NINE_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_TEN")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_TEN_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_ELEVEN")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_ELEVEN_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_TWELVE")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_TWELVE_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_THIRTEEN")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_THIRTEEN_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_FOURTEEN")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_FOURTEEN_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_FIFTEEN")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_FIFTEEN_NAME")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_SIXTEEN")));
+        diseases.add(TypeHandler.convertType(rowMap.get("DIAGNOSIS_SIXTEEN_NAME")));
+
         Document newDocument = new Document()
                 .append("ETL_LOAD_DATE", System.currentTimeMillis())
                 .append("ID", TypeHandler.convertType(rowMap.get("ID")))
@@ -79,38 +114,7 @@ public class SimpleMongoProcess1 implements RowProcess {
                 .append("ADMISSION_DISEASE_NAME", TypeHandler.convertType(rowMap.get("ADMISSION_DISEASE_NAME")))
                 .append("DIAGNOSIS_OUT", TypeHandler.convertType(rowMap.get("DIAGNOSIS_OUT")))
                 .append("DISCHARGE_DISEASE_NAME", TypeHandler.convertType(rowMap.get("DISCHARGE_DISEASE_NAME")))
-                .append("DIAGNOSIS_ONE", TypeHandler.convertType(rowMap.get("DIAGNOSIS_ONE")))
-                .append("DISEASE_NAME", TypeHandler.convertType(rowMap.get("DISEASE_NAME")))
-                .append("DIAGNOSIS_SECOND", TypeHandler.convertType(rowMap.get("DIAGNOSIS_SECOND")))
-                .append("SECOND_DISEASE_NAME", TypeHandler.convertType(rowMap.get("SECOND_DISEASE_NAME")))
-                .append("DIAGNOSIS_THIRD", TypeHandler.convertType(rowMap.get("DIAGNOSIS_THIRD")))
-                .append("THIRD_DISEASE_NAME", TypeHandler.convertType(rowMap.get("THIRD_DISEASE_NAME")))
-                .append("DIAGNOSIS_FOUR", TypeHandler.convertType(rowMap.get("DIAGNOSIS_FOUR")))
-                .append("DIAGNOSIS_FOUR_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_FOUR_NAME")))
-                .append("DIAGNOSIS_FIVE", TypeHandler.convertType(rowMap.get("DIAGNOSIS_FIVE")))
-                .append("DIAGNOSIS_FIVE_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_FIVE_NAME")))
-                .append("DIAGNOSIS_SIX", TypeHandler.convertType(rowMap.get("DIAGNOSIS_SIX")))
-                .append("DIAGNOSIS_SIX_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_SIX_NAME")))
-                .append("DIAGNOSIS_SEVEN", TypeHandler.convertType(rowMap.get("DIAGNOSIS_SEVEN")))
-                .append("DIAGNOSIS_SEVEN_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_SEVEN_NAME")))
-                .append("DIAGNOSIS_EIGHT", TypeHandler.convertType(rowMap.get("DIAGNOSIS_EIGHT")))
-                .append("DIAGNOSIS_EIGHT_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_EIGHT_NAME")))
-                .append("DIAGNOSIS_NINE", TypeHandler.convertType(rowMap.get("DIAGNOSIS_NINE")))
-                .append("DIAGNOSIS_NINE_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_NINE_NAME")))
-                .append("DIAGNOSIS_TEN", TypeHandler.convertType(rowMap.get("DIAGNOSIS_TEN")))
-                .append("DIAGNOSIS_TEN_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_TEN_NAME")))
-                .append("DIAGNOSIS_ELEVEN", TypeHandler.convertType(rowMap.get("DIAGNOSIS_ELEVEN")))
-                .append("DIAGNOSIS_ELEVEN_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_ELEVEN_NAME")))
-                .append("DIAGNOSIS_TWELVE", TypeHandler.convertType(rowMap.get("DIAGNOSIS_TWELVE")))
-                .append("DIAGNOSIS_TWELVE_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_TWELVE_NAME")))
-                .append("DIAGNOSIS_THIRTEEN", TypeHandler.convertType(rowMap.get("DIAGNOSIS_THIRTEEN")))
-                .append("DIAGNOSIS_THIRTEEN_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_THIRTEEN_NAME")))
-                .append("DIAGNOSIS_FOURTEEN", TypeHandler.convertType(rowMap.get("DIAGNOSIS_FOURTEEN")))
-                .append("DIAGNOSIS_FOURTEEN_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_FOURTEEN_NAME")))
-                .append("DIAGNOSIS_FIFTEEN", TypeHandler.convertType(rowMap.get("DIAGNOSIS_FIFTEEN")))
-                .append("DIAGNOSIS_FIFTEEN_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_FIFTEEN_NAME")))
-                .append("DIAGNOSIS_SIXTEEN", TypeHandler.convertType(rowMap.get("DIAGNOSIS_SIXTEEN")))
-                .append("DIAGNOSIS_SIXTEEN_NAME", TypeHandler.convertType(rowMap.get("DIAGNOSIS_SIXTEEN_NAME")))
+                .append("DISEASE", diseases)
                 .append("GENDER", TypeHandler.convertType(rowMap.get("GENDER")))
                 .append("BMI_CODE", TypeHandler.convertType(rowMap.get("BMI_CODE")))
                 .append("IsPregnant", false)

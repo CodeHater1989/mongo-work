@@ -17,7 +17,7 @@ public class BillMain {
 
         String url = "jdbc:oracle:thin:bmi_nanj/25thibd5@10.117.130.17:1521:ehong";
 
-        OracleStream stream = new OracleStream(url, sql, new SimpleMongoProcess1("bill", "bill.txt"), () -> {});
+        OracleStream stream = new OracleStream(url, sql, new SimpleMongoProcess1("bill_v3", "bill_v3.txt"), () -> {});
 
         new Thread(() -> {stream.processDataStream();}).start();
     }
