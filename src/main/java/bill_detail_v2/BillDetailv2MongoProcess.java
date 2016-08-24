@@ -26,14 +26,14 @@ import java.util.Map;
  */
 public class BillDetailv2MongoProcess implements RowProcess {
 
-    private static final int                          BATCH_SIZE             = 10_0000;
+    private static final int                          BATCH_SIZE             = 1_0000;
     private              MongoCollection              mongoCollection;
     private              Map<MongoKey, Integer>       keyStat                = new HashMap<>();
     private static final int                          MAX_RECODE_DETAIL_SIZE = 2_0000;
     private static       String                       SEPARATOR              = "###";
     private              Multimap<MongoKey, Document> mingxiMap              = ArrayListMultimap.create();
     private              int                          recordCounter          =      0;
-    private              Date                         beginDate;
+    private              long                         beginDate;
     private              File                         logFile;
 
     public BillDetailv2MongoProcess() {
@@ -43,7 +43,7 @@ public class BillDetailv2MongoProcess implements RowProcess {
 
         mongoCollection = db.getCollection("gz_detail_v2");
 
-        beginDate       = new Date();
+        beginDate       = System.currentTimeMillis();
         logFile         = new File("gz_bill_detail_v2.txt");
 
         if (logFile.exists()) {
@@ -142,9 +142,6 @@ public class BillDetailv2MongoProcess implements RowProcess {
     }
 
     private void insertBatch() {
-        long second = (new Date().getTime() - beginDate.getTime()) / 1000l;
-        second = (second == 0) ? 1 : second;
-
         String timeformatString = new DateTime().toString("HH:mm:ss");
 
         System.out.println("此次" + BATCH_SIZE + "条oracle原始纪录，共聚合成" + mingxiMap.asMap().size() + "条纪录。");
@@ -172,6 +169,9 @@ public class BillDetailv2MongoProcess implements RowProcess {
                 e.printStackTrace();
             }
         }
+
+        long second = (System.currentTimeMillis() - beginDate) / 1000l;
+        second = (second == 0) ? 1 : second;
 
         System.out.println("时间 " + timeformatString + ", 已处理" + recordCounter / 10000.0 + "万条数据, 处理速度" + recordCounter / second + "条/秒.");
 

@@ -2,6 +2,7 @@ package bill_v2;
 
 import Utils.DocumentHandler;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,9 @@ public class MongoStream {
 
         MongoCollection mongoCollection = db.getCollection("bill_detail_v3");
 
-        Iterator<Document> iterator= mongoCollection.find(queryCondition).sort(sortCondition).iterator();
+        FindIterable<Document> findIterable = mongoCollection.find(queryCondition).sort(sortCondition);
+        findIterable.noCursorTimeout(true);
+        Iterator<Document> iterator = findIterable.iterator();
         while (iterator.hasNext()) {
             Document document = iterator.next();
             Map<String, Object> row = DocumentHandler.flatDocument(document);
