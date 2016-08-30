@@ -1,9 +1,6 @@
 package testCode;
 
 import oracle.jdbc.pool.OracleDataSource;
-import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.TypeHandler;
-import org.apache.ibatis.type.TypeHandlerRegistry;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

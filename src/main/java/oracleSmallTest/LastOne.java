@@ -3,10 +3,8 @@ package oracleSmallTest;
 import oracle.jdbc.pool.OracleDataSource;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by wanglei on 16/8/5.

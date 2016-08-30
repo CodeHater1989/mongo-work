@@ -1,12 +1,12 @@
 package httpserver;
 
-import java.io.File;
-
 import org.apache.catalina.WebResourceRoot;
 import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
+
+import java.io.File;
 
 public class TomcatServer {
     public static void main(String[] args) throws Exception {

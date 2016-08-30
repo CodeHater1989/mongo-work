@@ -1,7 +1,4 @@
-import Bill.BillMain;
-import BillDetail.BillDetailMain;
 import bill_detail_v2.Bill_detail_v2_main;
-import bill_v2.Bill_v2_main;
 
 /**
  * Created by wanglei on 16/7/25.

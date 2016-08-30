@@ -1,13 +1,9 @@
 package testCode;
 
-import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 /**
  * Created by wanglei on 16/7/26.

@@ -1,7 +1,5 @@
 package testCode;
 
-import org.joda.time.DateTime;
-
 import java.util.Date;
 
 /**

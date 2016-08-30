@@ -17,7 +17,6 @@ import org.joda.time.DateTime;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 

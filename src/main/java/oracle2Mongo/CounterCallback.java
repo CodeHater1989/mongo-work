@@ -1,7 +1,5 @@
 package oracle2Mongo;
 
-import oracle2Mongo.ProcessCallback;
-
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
